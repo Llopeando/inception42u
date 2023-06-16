@@ -1,6 +1,50 @@
 services:
   nginx:
     container_name: nginx-container
-    build: ./requirements/nginx
+    build: ${REQ_LOC}/nginx
+    volumes:
+      - wordpress_data:/var/www/html
+    env_file:
+      - .env
     ports:
       - "443:443"
+    networks:
+      - default
+  wordpress:
+    container_name: wp-container
+    build: ${REQ_LOC}/wordpress
+    volumes:
+      - wordpress_data:/var/www/html
+    env_file:
+      - .env
+    ports:
+      - "9000"
+    networks:
+      - default
+  # mariadb:
+  #   container_name: mariadb-container
+  #   build: ${REQ_LOC}/mariadb
+  #   volumes:
+  #     - mariadb_data:/var/lib/mysql
+  #   ports:
+  #     - "3306:3306"
+  #   networks:
+  #     - default
+
+volumes:
+  # mariadb_data:
+  #   driver: local
+  #   driver_opts:
+  #     type: none
+  #     device: /home/ullorent/data/mariadb
+  #     o: bind
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/${USERNAME}/data/wordpress
+      o: bind
+
+networks:
+  default:
+    driver: bridge
