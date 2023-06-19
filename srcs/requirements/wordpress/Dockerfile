@@ -1,9 +1,9 @@
 FROM debian:buster
 
-# Update, install and update "trash" cleaning
+# Update, install and "trash" cleaning
 RUN apt-get update && apt-get install -y wget unzip vim php php-mysql php-gd php-curl php-xml php-fpm && rm -rf /var/lib/apt/lists/*
 
-# Configuration copy and php config fix
+# Configuration copy
 COPY conf/www.conf /etc/php/7.3/fpm/pool.d
 
 # Create the PID directory
