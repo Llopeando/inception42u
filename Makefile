@@ -41,7 +41,7 @@ status:
 prune:
 	docker system prune -f
 container-removal:
-	docker rm -f $$(docker ps -a -q)
+	docker rm -f $$(docker ps -a -q)	
 force-stop:
 	@echo "\033[1;33mForcing containers to stop... \033[0m\033[30m(cmd: docker compose -f stop)\033[0m"
 	@docker compose -f $(DOCKER_COMPOSE_LOC) stop

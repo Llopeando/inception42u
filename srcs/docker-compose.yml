@@ -10,6 +10,8 @@ services:
       - "443:443"
     networks:
       - default
+    depends_on:
+      - wordpress
   wordpress:
     container_name: wp-container
     build: ${REQ_LOC}/wordpress
@@ -21,28 +23,32 @@ services:
       - "9000"
     networks:
       - default
-  # mariadb:
-  #   container_name: mariadb-container
-  #   build: ${REQ_LOC}/mariadb
-  #   volumes:
-  #     - mariadb_data:/var/lib/mysql
-  #   ports:
-  #     - "3306:3306"
-  #   networks:
-  #     - default
+    depends_on:
+      - mariadb
+  mariadb:
+    container_name: mariadb-container
+    build: ${REQ_LOC}/mariadb
+    volumes:
+      - mariadb_data:/var/local/bin/mysql
+    ports:
+      - "3306:3306"
+    env_file:
+      - .env
+    networks:
+      - default
 
 volumes:
-  # mariadb_data:
-  #   driver: local
-  #   driver_opts:
-  #     type: none
-  #     device: /home/ullorent/data/mariadb
-  #     o: bind
   wordpress_data:
     driver: local
     driver_opts:
       type: none
       device: /home/${USERNAME}/data/wordpress
+      o: bind
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/${USERNAME}/data/mariadb
       o: bind
 
 networks:

@@ -4,15 +4,13 @@ FROM debian:buster
 RUN apt-get update && apt-get install -y vim mariadb-server mariadb-client && rm -rf /var/lib/apt/lists/*
 
 # Script and .sql file copy
-COPY conf/create_table.sql /var/local/bin
+RUN mkdir -p /var/local/bin
+RUN mkdir -p /var/local/mysql
 COPY tools/init.sh /var/local/bin
-RUN chmod +x /var/local/bin/init.sh && /var/local/bin/init.sh
-RUN chmod +x /var/local/bin/create_table.sql
+COPY config/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+RUN chmod +x /var/local/bin/init.sh
 
 # Permissions setter for mysqld
-RUN mkdir -p /var/run/mysqld && chown -R mysql:mysql /var/run/mysqld && chmod 777 /var/run/mysqld
-EXPOSE 3306
+RUN chown -R mysql:mysql /var/run/mysql && chmod 755 /var/run/mysql
 
-WORKDIR /usr/local/
-
-CMD ["mysqld", "--bind-address=0.0.0.0"]
+CMD ["/bin/bash", "-c", "/var/local/bin/init.sh && mysqld --bind-address=0.0.0.0"]

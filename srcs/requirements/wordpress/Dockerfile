@@ -3,22 +3,14 @@ FROM debian:buster
 # Update, install and "trash" cleaning
 RUN apt-get update && apt-get install -y wget unzip vim php php-mysql php-gd php-curl php-xml php-fpm && rm -rf /var/lib/apt/lists/*
 
-# Configuration copy
+# Configuration and script copy
 COPY conf/www.conf /etc/php/7.3/fpm/pool.d
+COPY tools/init.sh /home
 
-# Create the PID directory
+# Create the PID directory and give neccesary permissions
 RUN mkdir -p /run/php
 RUN mkdir -p /var/www/html/php
+RUN chmod +x /home/init.sh && /home/init.sh
 
-# Everything starting from here, will be done in /var/www/html
-# It will copy the script init.sh inside html and run it, so it will install Wordpress
-WORKDIR /var/www/html
-
-COPY tools/init.sh /var/www/html
-RUN chmod +x /var/www/html/init.sh && /var/www/html/init.sh
-
-EXPOSE 9000
-
-# nginx default html website removal and php starter
-CMD ["rm", "-rf", "index.nginx-debian.html"]
-CMD ["/usr/sbin/php-fpm7.3", "-F"]
+# Wordpress initial installation script runner and ph-fpm starter
+CMD ["/bin/bash", "-c", "/usr/sbin/php-fpm7.3 -F"]
