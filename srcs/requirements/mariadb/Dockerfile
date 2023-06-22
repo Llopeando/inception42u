@@ -5,12 +5,14 @@ RUN apt-get update && apt-get install -y vim mariadb-server mariadb-client && rm
 
 # Script and .sql file copy
 RUN mkdir -p /var/local/bin
-RUN mkdir -p /var/local/mysql
+RUN mkdir -p /var/run/mysqld
 COPY tools/init.sh /var/local/bin
-COPY config/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 RUN chmod +x /var/local/bin/init.sh
 
 # Permissions setter for mysqld
-RUN chown -R mysql:mysql /var/run/mysql && chmod 755 /var/run/mysql
+RUN chown -R mysql:mysql /var/run/mysqld && chmod 777 /var/run/mysqld
 
-CMD ["/bin/bash", "-c", "/var/local/bin/init.sh && mysqld --bind-address=0.0.0.0"]
+# # Create the socket file
+# RUN touch /var/run/mysqld/mysqld.sock && chown mysql:mysql /var/run/mysqld/mysqld.sock
+
+CMD ["/bin/bash", "-c", "/var/local/bin/init.sh && mysqld --bind-address=127.0.0.1"]
