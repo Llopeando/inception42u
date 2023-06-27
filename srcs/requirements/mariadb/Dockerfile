@@ -1,18 +1,22 @@
 FROM debian:buster
 
-# Update, install and "trash" cleaning
-RUN apt-get update && apt-get install -y vim mariadb-server mariadb-client && rm -rf /var/lib/apt/lists/*
+# Update, install, MySQL service start and "trash" cleaning
+RUN apt-get update && apt-get install -y vim mariadb-server && service mysql start && rm -rf /var/lib/apt/lists/*
 
-# Script and .sql file copy
-RUN mkdir -p /var/local/bin
-RUN mkdir -p /var/run/mysqld
-COPY tools/init.sh /var/local/bin
-RUN chmod +x /var/local/bin/init.sh
+# Script file copy
+COPY tools/init.sh /home
+RUN chmod +x /home/init.sh
 
-# Permissions setter for mysqld
-RUN chown -R mysql:mysql /var/run/mysqld && chmod 777 /var/run/mysqld
+ENV MYSQL_ROOT_PASSWORD=rootie \
+	MYSQL_USER=ullorent \
+	MYSQL_PASSWORD=admin \
+	WORDPRESS_DB_USER=ullorent \
+	WORDPRESS_DB_PASSWORD=admin \
+	WORDPRESS_DB_NAME=wordpress
 
-# # Create the socket file
-# RUN touch /var/run/mysqld/mysqld.sock && chown mysql:mysql /var/run/mysqld/mysqld.sock
+# MySQL folder permissions and script initialization
+RUN chown -R mysql /var/lib/mysql && ./home/init.sh
 
-CMD ["/bin/bash", "-c", "/var/local/bin/init.sh && mysqld --bind-address=127.0.0.1"]
+EXPOSE 3306
+
+CMD ["mysqld"]
