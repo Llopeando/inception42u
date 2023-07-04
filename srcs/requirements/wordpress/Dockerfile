@@ -1,7 +1,7 @@
 FROM debian:buster
 
 # Update, install and "trash" cleaning
-RUN apt-get update && apt-get install -y wget unzip vim php php-mysql php-gd php-curl php-xml php-fpm && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y wget unzip vim php php-mysql php-gd php-curl php-xml php-fpm mariadb-client && rm -rf /var/lib/apt/lists/*
 
 # Configuration and script copy
 COPY conf/www.conf /etc/php/7.3/fpm/pool.d

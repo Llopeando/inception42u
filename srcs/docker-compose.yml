@@ -1,41 +1,44 @@
 services:
-  nginx:
-    container_name: nginx-container
-    build: ${REQ_LOC}/nginx
+  mariadb:
+    container_name: mariadb-container
+    build: ${REQ_LOC}/mariadb
     volumes:
-      - wordpress_data:/var/www/html
+      - mariadb_data:/var/bin/mysql
+    restart: always
+    ports:
+      - 3306
     env_file:
       - .env
-    ports:
-      - "443:443"
     networks:
-      - default
-    depends_on:
-      - wordpress
+      - default_network
   wordpress:
     container_name: wp-container
     build: ${REQ_LOC}/wordpress
     volumes:
       - wordpress_data:/var/www/html
+    restart: always
     env_file:
       - .env
     ports:
-      - "9000"
+      - 9000
     networks:
-      - default
+      - default_network
     depends_on:
       - mariadb
-  mariadb:
-    container_name: mariadb-container
-    build: ${REQ_LOC}/mariadb
+  nginx:
+    container_name: nginx-container
+    build: ${REQ_LOC}/nginx
     volumes:
-      - mariadb_data:/var/local/bin/mysql
-    ports:
-      - "3306:3306"
+      - wordpress_data:/var/www/html
+    restart: always
     env_file:
       - .env
+    ports:
+      - "443:443"
     networks:
-      - default
+      - default_network
+    depends_on:
+      - wordpress
 
 volumes:
   wordpress_data:
@@ -52,5 +55,5 @@ volumes:
       o: bind
 
 networks:
-  default:
+  default_network:
     driver: bridge
