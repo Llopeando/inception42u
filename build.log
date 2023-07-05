@@ -1,0 +1,72 @@
+[1;33mBuilding containers...[0m
+make build
+make[1]: Entering directory '/home/ullorent/Desktop/inception42u'
+docker compose -f ./srcs/docker-compose.yml build
+#1 [mariadb internal] load .dockerignore
+#1 transferring context: 2B done
+#1 DONE 0.1s
+
+#2 [mariadb internal] load build definition from Dockerfile
+#2 transferring dockerfile: 555B 0.0s done
+#2 DONE 0.2s
+
+#3 [mariadb internal] load metadata for docker.io/library/debian:buster
+#3 DONE 1.5s
+
+#4 [mariadb 1/4] FROM docker.io/library/debian:buster@sha256:c21dbb23d41cb3f1c1a7f841e8642bf713934fb4dc5187979bd46f0b4b488616
+#4 DONE 0.0s
+
+#5 [mariadb internal] load build context
+#5 transferring context: 836B done
+#5 DONE 0.1s
+
+#6 [mariadb 2/4] COPY tools/init.sh /home
+#6 CACHED
+
+#7 [mariadb 3/4] RUN apt-get update && apt-get install -y vim mariadb-server mariadb-client && service mysql start && rm -rf /var/lib/apt/lists/*
+#7 1.038 Get:1 http://deb.debian.org/debian buster InRelease [122 kB]
+#7 1.056 Get:2 http://deb.debian.org/debian-security buster/updates InRelease [34.8 kB]
+#7 1.066 Get:3 http://deb.debian.org/debian buster-updates InRelease [56.6 kB]
+#7 1.308 Get:4 http://deb.debian.org/debian buster/main amd64 Packages [7909 kB]
+#7 1.564 Get:5 http://deb.debian.org/debian-security buster/updates/main amd64 Packages [522 kB]
+#7 1.581 Get:6 http://deb.debian.org/debian buster-updates/main amd64 Packages [8788 B]
+#7 2.578 Fetched 8653 kB in 2s (5390 kB/s)
+#7 2.578 Reading package lists...
+#7 3.161 Reading package lists...
+#7 3.680 Building dependency tree...
+#7 3.783 Reading state information...
+#7 3.897 The following additional packages will be installed:
+#7 3.897   galera-3 gawk libaio1 libcgi-fast-perl libcgi-pm-perl
+#7 3.897   libconfig-inifiles-perl libdbd-mysql-perl libdbi-perl libencode-locale-perl
+#7 3.897   libfcgi-perl libgdbm-compat4 libgdbm6 libgpm2 libhtml-parser-perl
+#7 3.897   libhtml-tagset-perl libhtml-template-perl libhttp-date-perl
+#7 3.897   libhttp-message-perl libio-html-perl liblwp-mediatypes-perl libmariadb3
+#7 3.897   libmpfr6 libncurses6 libperl5.28 libpopt0 libreadline5 libreadline7
+#7 3.897   libsigsegv2 libsnappy1v5 libssl1.1 libterm-readkey-perl libtimedate-perl
+#7 3.897   liburi-perl libwrap0 lsb-base lsof mariadb-client-10.3
+#7 3.898   mariadb-client-core-10.3 mariadb-common mariadb-server-10.3
+#7 3.898   mariadb-server-core-10.3 mysql-common netbase perl perl-modules-5.28 psmisc
+#7 3.898   readline-common rsync socat vim-common vim-runtime xxd
+#7 3.899 Suggested packages:
+#7 3.899   gawk-doc libclone-perl libmldbm-perl libnet-daemon-perl
+#7 3.899   libsql-statement-perl gdbm-l10n gpm libdata-dump-perl
+#7 3.899   libipc-sharedcache-perl sensible-utils libwww-perl mailx mariadb-test
+#7 3.899   netcat-openbsd tinyca perl-doc libterm-readline-gnu-perl
+#7 3.899   | libterm-readline-perl-perl make libb-debug-perl liblocale-codes-perl
+#7 3.899   readline-doc openssh-client openssh-server ctags vim-doc vim-scripts
+#7 4.250 The following NEW packages will be installed:
+#7 4.250   galera-3 gawk libaio1 libcgi-fast-perl libcgi-pm-perl
+#7 4.250   libconfig-inifiles-perl libdbd-mysql-perl libdbi-perl libencode-locale-perl
+#7 4.250   libfcgi-perl libgdbm-compat4 libgdbm6 libgpm2 libhtml-parser-perl
+#7 4.250   libhtml-tagset-perl libhtml-template-perl libhttp-date-perl
+#7 4.251   libhttp-message-perl libio-html-perl liblwp-mediatypes-perl libmariadb3
+#7 4.251   libmpfr6 libncurses6 libperl5.28 libpopt0 libreadline5 libreadline7
+#7 4.251   libsigsegv2 libsnappy1v5 libssl1.1 libterm-readkey-perl libtimedate-perl
+#7 4.251   liburi-perl libwrap0 lsb-base lsof mariadb-client mariadb-client-10.3
+#7 4.251   mariadb-client-core-10.3 mariadb-common mariadb-server mariadb-server-10.3
+#7 4.252   mariadb-server-core-10.3 mysql-common netbase perl perl-modules-5.28 psmisc
+#7 4.252   readline-common rsync socat vim vim-common vim-runtime xxd
+#7 4.288 0 upgraded, 55 newly installed, 0 to remove and 0 not upgraded.
+#7 4.288 Need to get 39.6 MB of archives.
+#7 4.288 After this operation, 260 MB of additional disk space will be used.
+#7 4.288 Get:1 http://deb.debian.org/de

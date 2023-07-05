@@ -5,8 +5,6 @@ services:
     volumes:
       - mariadb_data:/var/bin/mysql
     restart: always
-    ports:
-      - 3306
     env_file:
       - .env
     networks:
@@ -19,8 +17,6 @@ services:
     restart: always
     env_file:
       - .env
-    ports:
-      - 9000
     networks:
       - default_network
     depends_on:
