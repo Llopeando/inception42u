@@ -8,7 +8,7 @@ services:
     env_file:
       - .env
     networks:
-      - default_network
+      - default
   wordpress:
     container_name: wp-container
     build: ${REQ_LOC}/wordpress
@@ -18,7 +18,7 @@ services:
     env_file:
       - .env
     networks:
-      - default_network
+      - default
     depends_on:
       - mariadb
   nginx:
@@ -32,7 +32,7 @@ services:
     ports:
       - "443:443"
     networks:
-      - default_network
+      - default
     depends_on:
       - wordpress
 
@@ -51,5 +51,5 @@ volumes:
       o: bind
 
 networks:
-  default_network:
+  default:
     driver: bridge
