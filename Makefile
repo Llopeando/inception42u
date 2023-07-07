@@ -29,7 +29,6 @@ start:
 	@sleep 1
 	make up
 	@echo "\033[1;32mAll has been made!\033[0m You can access them using your favorite explorer with \033[1;37mhttps://ullorent.42.fr\033[0m"
-stopandrun: stop up
 restart:
 	@echo "\033[1;33mRestarting containers... \033[0m\033[30m(cmd: docker restart)\033[0m"
 	@docker restart $$(docker ps -a -q)
@@ -45,8 +44,9 @@ container-removal:
 force-stop:
 	@echo "\033[1;33mForcing containers to stop... \033[0m\033[30m(cmd: docker compose -f stop)\033[0m"
 	@docker compose -f $(DOCKER_COMPOSE_LOC) stop
-	@make down
 	@echo "\033[1;32mDone!\033[0m"
 	@echo "\033[1;31mPruning... \033[0m\033[30m(cmd: docker system prune -f)\033[0m"
 	@docker rm -f $$(docker ps -a -q) && docker system prune -f
 	@echo "\033[1;32mDone!\033[0m"
+
+.PHONY: stop down clean start restart status

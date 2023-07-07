@@ -3,7 +3,7 @@ services:
     container_name: mariadb-container
     build: ${REQ_LOC}/mariadb
     volumes:
-      - mariadb_data:/var/bin/mysql
+      - mariadb_data:/var/lib/mysql
     restart: always
     env_file:
       - .env
